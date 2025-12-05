@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Deploy code') {
             steps {
-                sshagent(['shaik-ec2-key']) {
+                sshagent(['Shaik-ec2-key']) {
                     sh 'scp target/MyWebApp.war ec2-user@3.109.55.101:/home/ec2-user/apache-tomcat-9.0.112/webapps'
                 }
             }
