@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    tools {
+        maven 'Maven 3.9.6'
+    }
+    stages {
+        stage('Get Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/ShaikRijwana1/WebAppFolder.git'
+            }
+        }
+        stage('Build code') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy code') {
+            steps {
+                sshagent(['shaik-ec2-key']) {
+                    sh 'scp target/MyWebApp.war ec2-user@3.109.55.101:/home/ec2-user/apache-tomcat-9.0.112/webapps'
+                }
+            }
+        }
+    }
+}
